@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class SlotHandler : MonoBehaviour
 {
+    //test
     public Image draggableItem;
     public Inventory inventory = Inventory.instance;
     public EquipHandler equipHandler = EquipHandler.instance;
