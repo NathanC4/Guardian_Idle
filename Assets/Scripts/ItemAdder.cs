@@ -1,25 +1,17 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ItemAdder : MonoBehaviour
 {
     public Item item;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    int idCounter = 0;
 
     public void AddItem()
     {
-        Inventory.instance.Add(new Item("DefaultIcon"));
+        idCounter++;
+        WearSlot ws = (WearSlot)UnityEngine.Random.Range(0, Enum.GetValues(typeof(WearSlot)).Length);
+
+        Inventory.instance.Add(new Equipment(idCounter, "test Item", "Pickaxe", ws, new List<StatModifier>() ) );
     }
 }

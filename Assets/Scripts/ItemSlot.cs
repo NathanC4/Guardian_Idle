@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ItemSlot : MonoBehaviour, IDragHandler, IDropHandler, IBeginDragHandler, IEndDragHandler
+public class ItemSlot : MonoBehaviour, IDragHandler, IDropHandler, IBeginDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     Item item;
     public Image icon;
@@ -38,6 +38,21 @@ public class ItemSlot : MonoBehaviour, IDragHandler, IDropHandler, IBeginDragHan
         return item == null;
     }
 
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+
+        if (item != null)
+        {
+            item.ShowTooltip();
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        Tooltip.instance.Hide();
+    }
+
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         //if (item != null)
@@ -66,4 +81,6 @@ public class ItemSlot : MonoBehaviour, IDragHandler, IDropHandler, IBeginDragHan
     {
         OnDropEvent?.Invoke(this);
     }
+
+
 }

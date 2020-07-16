@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
         UpdateHealthBar();
     }
 
-    public void resetStats()
+    public void ResetStats()
     {
         // Set multipliers to 0
         for (int i = 0; i < statMods.GetLength(0); i++)

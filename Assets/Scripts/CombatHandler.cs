@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 public class CombatHandler : MonoBehaviour
 {
@@ -56,7 +55,7 @@ public class CombatHandler : MonoBehaviour
             evadeChance = 1 - (100 / (100 + enemy.Evasion));
 
 
-        if (randFloat() < evadeChance)
+        if (RandFloat() < evadeChance)
         {
             // Attack evaded
             //Debug.Log("Enemy evaded attack.");
@@ -65,7 +64,7 @@ public class CombatHandler : MonoBehaviour
         {
             double damage = playerDamage * (100 / (100 + enemy.Armor));
 
-            if (randFloat() < player.CritChance)
+            if (RandFloat() < player.CritChance)
             {
                 damage *= player.CritMulti;
             }
@@ -86,7 +85,7 @@ public class CombatHandler : MonoBehaviour
             evadeChance = 1 - (100 / (100 + player.Evasion));
 
 
-        if (randFloat() < evadeChance)
+        if (RandFloat() < evadeChance)
         {
             // Attack evaded
             //Debug.Log("Player evaded attack.");
@@ -96,7 +95,7 @@ public class CombatHandler : MonoBehaviour
         {
             double damage = enemyDamage * (100 / (100 + player.Armor));
 
-            if (randFloat() < enemy.CritChance)
+            if (RandFloat() < enemy.CritChance)
             {
                 damage *= enemy.CritMulti;
             }
@@ -121,8 +120,8 @@ public class CombatHandler : MonoBehaviour
         
     }
 
-    private float randFloat()
+    private float RandFloat()
     {
-        return UnityEngine.Random.Range(0.0f, 1.0f);
+        return Random.Range(0.0f, 1.0f);
     }
 }

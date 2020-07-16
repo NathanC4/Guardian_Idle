@@ -3,23 +3,25 @@ using UnityEngine;
 
 //[CreateAssetMenu(fileName = "New Item", menuName = "Item")]
 [System.Serializable]
-public class Item //: ScriptableObject
+public class Item
 {
-    public string name = "New Item";
+    public int id;
+    public string name;
     public Sprite icon; // = Resources.Load<Sprite>("DefaultIcon");
 
-    List<StatModifier> mods;
+    //List<StatModifier> mods;
     
-    public Item(string path)
+    public Item(int id, string name, string imagePath)
     {
-        icon = Resources.Load<Sprite>(path);
-        mods = new List<StatModifier>();
+        this.id = id;
+        this.name = name;
+        icon = Resources.Load<Sprite>(imagePath);
     }
 
-    public void Equip()
+    public virtual void ShowTooltip()
     {
-        foreach (StatModifier sm in mods){
-            sm.ToString();
-        }
+        Tooltip.instance.Show(
+            "ID: " + id +
+            "\nName: " + name);
     }
 }

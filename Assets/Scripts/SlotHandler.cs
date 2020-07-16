@@ -10,7 +10,6 @@ public class SlotHandler : MonoBehaviour
     public Image draggableItem;
     public Inventory inventory = Inventory.instance;
     public EquipHandler equipHandler = EquipHandler.instance;
-    //public Inventory2 equipHandler = Inventory2.instance;
 
     ItemSlot source = null;
 
@@ -19,17 +18,16 @@ public class SlotHandler : MonoBehaviour
         //inventory = Inventory.instance;
         //equipHandler = EquipHandler.instance;
 
-        
+        inventory.OnBeginDragEvent += BeginDrag;
+        inventory.OnDragEvent += Drag;
+        inventory.OnEndDragEvent += EndDrag;
+        inventory.OnDropEvent += Drop;
 
         equipHandler.OnBeginDragEvent += BeginDrag;
         equipHandler.OnDragEvent += Drag;
         equipHandler.OnEndDragEvent += EndDrag;
         equipHandler.OnDropEvent += Drop;
 
-        inventory.OnBeginDragEvent += BeginDrag;
-        inventory.OnDragEvent += Drag;
-        inventory.OnEndDragEvent += EndDrag;
-        inventory.OnDropEvent += Drop;
     }
 
     public void BeginDrag(ItemSlot slot)
@@ -72,21 +70,54 @@ public class SlotHandler : MonoBehaviour
     {
         Debug.Log("Dropping: " + destination);
 
-        if (source != null)
+        if (source == null)
+            return;
+
+        if (!IsValid(source.GetItem(), destination) )
+            return;
+
+        // Move or swap items
+        if (destination.IsEmpty()) // Destination is empty, simply move item
         {
-            // move or swap items
-            if (destination.IsEmpty())
+            destination.AddItem(source.GetItem());
+            source.Clear();
+        }
+        else
+        {
+            // Check if swap is valid
+            if (!IsValid(destination.GetItem(), source))
+                return;
+
+            Item temp = destination.GetItem();
+            destination.AddItem(source.GetItem());
+            source.AddItem(temp);
+        }
+
+        destination.GetItem().ShowTooltip(); // Show tooltip for moved item
+    }
+
+    // Check if slot is a valid destination for item
+    public bool IsValid(Item item, ItemSlot slot)
+    {
+        
+        if (slot is InventorySlot)
+            return true;
+
+        if (slot is EquipSlot)
+        {
+            if (item is Equipment)
             {
-                destination.AddItem(source.GetItem());
-                source.Clear();
-            }
-            else
-            {
-                Item temp = destination.GetItem();
-                destination.AddItem(source.GetItem());
-                source.AddItem(temp);
+                EquipSlot es = (EquipSlot)slot;
+                Equipment eq = (Equipment)item;
+
+                Debug.Log("Slot wear slot: " + es);
+                Debug.Log("Item wear slot: " + eq);
+
+                return es.GetWearSlot() == eq.GetWearSlot();
             }
         }
+
+        return false;
     }
 }
     

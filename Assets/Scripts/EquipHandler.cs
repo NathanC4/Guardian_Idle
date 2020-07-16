@@ -6,12 +6,9 @@ public class EquipHandler : MonoBehaviour
 {
     public static EquipHandler instance;
 
-    //public delegate void OnItemChanged();
-    //public OnItemChanged onItemChangedCallback;
-
     public List<Item> items = new List<Item>();
 
-    public List<InventorySlot> slots;
+    public List<ItemSlot> slots;
     public event Action<ItemSlot> OnBeginDragEvent;
     public event Action<ItemSlot> OnDragEvent;
     public event Action<ItemSlot> OnEndDragEvent;
@@ -22,7 +19,6 @@ public class EquipHandler : MonoBehaviour
     void OnValidate()
     {
         GetComponentsInChildren(includeInactive: true, result: slots);
-        Debug.Log("EquipHandler.OnValidate(): " + slots);
         
     }
 
@@ -30,15 +26,14 @@ public class EquipHandler : MonoBehaviour
     {
         if (instance != null)
         {
-            Debug.LogWarning("More than one instance of Inventory!");
+            Debug.LogWarning("More than one instance of EquipHandler!");
         }
         instance = this;
 
         //GetComponentsInChildren(includeInactive: true, result: slots);
 
-        foreach (InventorySlot slot in slots)
+        foreach (ItemSlot slot in slots)
         {
-            Debug.Log("EquipHandler adding events to: " + slot);
             slot.OnBeginDragEvent += OnBeginDragEvent;
             slot.OnDragEvent += OnDragEvent;
             slot.OnEndDragEvent += OnEndDragEvent;
@@ -63,9 +58,6 @@ public class EquipHandler : MonoBehaviour
                 break;
             }
         }
-
-        // if (onItemChangedCallback != null)
-        //     onItemChangedCallback.Invoke();
     }
 
     public void Remove(Item item)
@@ -74,7 +66,5 @@ public class EquipHandler : MonoBehaviour
 
         items.Remove(item);
 
-        // if (onItemChangedCallback != null)
-        //     onItemChangedCallback.Invoke();
     }
 }
