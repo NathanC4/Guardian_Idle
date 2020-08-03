@@ -21,7 +21,7 @@ public class Equipment : Item
     {
         foreach (StatModifier sm in mods)
         {
-            sm.ToString();
+            sm.Add();
         }
     }
 
@@ -32,11 +32,16 @@ public class Equipment : Item
 
     public override void ShowTooltip()
     {
+        string tooltip = "ID: " + id +
+                        "\nName: " + name +
+                        "\nWear slot: " + wearSlot;
 
-        Tooltip.instance.Show(
-            "ID: " + id + 
-            "\nName: " + name + 
-            "\nWear slot: " + wearSlot);
+        foreach (StatModifier mod in mods)
+        {
+            tooltip += "\n" + mod;
+        }
+        
+        Tooltip.instance.Show(tooltip);
 
     }
 }

@@ -62,8 +62,6 @@ public class Player : MonoBehaviour
         statMods[(int)Stat.CritChance, (int)ModifierType.Add] = 0.05;
         statMods[(int)Stat.CritMulti, (int)ModifierType.Add] = 1.5;
         statMods[(int)Stat.MaxHealth, (int)ModifierType.Add] = 100;
-
-
     }
 
     public void TakeDamage(int damage)

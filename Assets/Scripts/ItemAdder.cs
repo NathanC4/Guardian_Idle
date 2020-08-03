@@ -6,68 +6,77 @@ public class ItemAdder : MonoBehaviour
 {
     public Item item;
     int idCounter = 0;
+    string icon;
     WearSlot ws;
+    List<StatModifier> mods;
 
     public void AddItem()
     {
         idCounter++;
 
         int itemtype = UnityEngine.Random.Range(0, Enum.GetValues(typeof(WearSlot)).Length + 1);
-        
+        mods = new List<StatModifier>();
+
         switch (itemtype) 
         {
             case 0: // Body
                 ws = WearSlot.Body;
-                Inventory.instance.Add(new Equipment(idCounter, "test Item", "armor_14", ws, new List<StatModifier>() ) );
+                icon = "armor_14";
                 break;
 
             case 1: // Boots
                 ws = WearSlot.Boots;
-                Inventory.instance.Add(new Equipment(idCounter, "test Item", "boots_7", ws, new List<StatModifier>()));
+                icon = "boots_7";
                 break;
 
             case 2: // Gloves
                 ws = WearSlot.Gloves;
-                Inventory.instance.Add(new Equipment(idCounter, "test Item", "gloves_18", ws, new List<StatModifier>()));
+                icon = "gloves_18";
                 break;
 
             case 3: // Head
                 ws = WearSlot.Head;
-                Inventory.instance.Add(new Equipment(idCounter, "test Item", "helmets_19", ws, new List<StatModifier>()));
+                icon = "helmets_19";
                 break;
 
             case 4: // Neck
                 ws = WearSlot.Neck;
-                Inventory.instance.Add(new Equipment(idCounter, "test Item", "necklace_2", ws, new List<StatModifier>()));
+                icon = "necklace_2";
                 break;
 
             case 5: // Ring
                 ws = WearSlot.Ring;
-                Inventory.instance.Add(new Equipment(idCounter, "test Item", "rings_6", ws, new List<StatModifier>()));
+                icon = "rings_6";
                 break;
 
             case 6: // Mainhand
                 ws = WearSlot.Mainhand;
-                Inventory.instance.Add(new Equipment(idCounter, "test Item", "swords_10_b", ws, new List<StatModifier>()));
+                icon = "swords_10_b";
                 break;
 
             case 7: // Offhand
                 ws = WearSlot.Offhand;
-                Inventory.instance.Add(new Equipment(idCounter, "test Item", "dagger_13_b", ws, new List<StatModifier>()));
+                icon = "dagger_13_b";
                 break;
 
             case 8: // Shield
                 ws = WearSlot.Offhand;
-                Inventory.instance.Add(new Equipment(idCounter, "test Item", "sh_b_01", ws, new List<StatModifier>()));
+                icon = "sh_b_01";
                 break;
         }
+        for (int i = 0; i < 3; i++)
+        {
+            mods.Add(RandMod());
+        }
+        Inventory.instance.Add(new Equipment(idCounter, "test Item", icon, ws, mods));
     }
 
     public StatModifier RandMod()
     {
-        ModifierType mt = (ModifierType)UnityEngine.Random.Range(0, Enum.GetValues(typeof(ModifierType)).Length);
+        // ModifierType mt = (ModifierType)UnityEngine.Random.Range(0, Enum.GetValues(typeof(ModifierType)).Length);
+        ModifierType mt = ModifierType.Add;
         Stat st = (Stat)UnityEngine.Random.Range(0, Enum.GetValues(typeof(Stat)).Length);
-        double val = UnityEngine.Random.Range(0f, 10f);
+        double val = UnityEngine.Random.Range(1, 11);
 
         return new StatModifier(mt, st, val);
     }
