@@ -6,7 +6,7 @@ public class EquipHandler : MonoBehaviour
 {
     public static EquipHandler instance;
 
-    public List<Item> items = new List<Item>();
+    public List<Equipment> items = new List<Equipment>();
 
     public List<ItemSlot> slots;
     public event Action<ItemSlot> OnBeginDragEvent;
@@ -14,12 +14,9 @@ public class EquipHandler : MonoBehaviour
     public event Action<ItemSlot> OnEndDragEvent;
     public event Action<ItemSlot> OnDropEvent;
 
-    public int maxSize = 20;
-
     void OnValidate()
     {
         GetComponentsInChildren(includeInactive: true, result: slots);
-        
     }
 
     private void Awake()
@@ -41,30 +38,27 @@ public class EquipHandler : MonoBehaviour
         }
     }
 
-    public void Add(Item item)
+    public void Add(Equipment item)
     {
-        Debug.Log("adding: " + item.name);
-
-        if (items.Count >= maxSize)
-            Debug.Log("Not enough room in inventory");
+        Debug.Log("adding eq: " + item.name);
 
         items.Add(item);
-
-        foreach (InventorySlot slot in slots)
-        {
-            if (slot.IsEmpty())
-            {
-                slot.AddItem(item);
-                break;
-            }
-        }
+        item.Equip();
     }
 
-    public void Remove(Item item)
+    public void Remove(Equipment item)
     {
-        Debug.Log("removing: " + item.name);
-
+        Debug.Log("removing eq: " + item.name);
         items.Remove(item);
 
+        // Recalculate equipment stats
+        Player.instance.ResetStats();
+        
+        foreach(Equipment e in items)
+        {
+            e.AddStats();
+        }
+
+        Player.instance.UpdateStats();
     }
 }

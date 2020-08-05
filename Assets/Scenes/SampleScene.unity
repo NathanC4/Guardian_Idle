@@ -3940,7 +3940,6 @@ MonoBehaviour:
   ch: {fileID: 1342511610}
   healthBar: {fileID: 1724330392}
   health: 0
-  maxHealth: 100
   stats:
   - 0
   - 0
@@ -5016,7 +5015,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eae28ceb2221aa842bfd5d0b3148ce6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items: []
   slots:
   - {fileID: 1819122023}
   - {fileID: 46730681}
@@ -5026,7 +5024,6 @@ MonoBehaviour:
   - {fileID: 1743403805}
   - {fileID: 1127533319}
   - {fileID: 734230675}
-  maxSize: 20
 --- !u!114 &1116944126
 MonoBehaviour:
   m_ObjectHideFlags: 0

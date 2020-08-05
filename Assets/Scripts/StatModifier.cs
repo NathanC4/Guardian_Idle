@@ -1,5 +1,5 @@
 ﻿public enum ModifierType { Add, Percent, Multiply}
-public enum Stat { Health, MaxHealth, Attack, AttackSpeed, Accuracy, Armor, Evasion, CritChance, CritMulti}
+public enum Stat { MaxHealth, Attack, AttackSpeed, Accuracy, Armor, Evasion, CritChance, CritMulti}
 public class StatModifier
 {
     public ModifierType type;

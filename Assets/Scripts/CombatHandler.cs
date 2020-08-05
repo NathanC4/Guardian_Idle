@@ -7,8 +7,6 @@ public class CombatHandler : MonoBehaviour
     public Enemy enemy;
 
     double attackTimer = 0;
-    double playerDamage;
-    double attackDelay;
 
     double enemyAttackTimer = 0;
     double enemyDamage;
@@ -17,6 +15,7 @@ public class CombatHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player.UpdateStats();
         UpdatePlayer();
         UpdateEnemy();
     }
@@ -29,12 +28,12 @@ public class CombatHandler : MonoBehaviour
 
         
         //Debug.Log("attackTimer: " + attackTimer);
-        //Debug.Log("attackDelay: " + attackDelay);
+        //Debug.Log("player.AttackDelay: " + player.AttackDelay);
 
 
-        if (attackTimer >= attackDelay)
+        if (attackTimer >= player.AttackDelay)
         {
-            attackTimer -= attackDelay;
+            attackTimer -= player.AttackDelay;
             PlayerAttack();
         }
 
@@ -52,17 +51,17 @@ public class CombatHandler : MonoBehaviour
         if (player.Accuracy >= enemy.Evasion)
             evadeChance = 0;
         else
-            evadeChance = 1 - (100 / (100 + enemy.Evasion));
+            evadeChance = 1 - (100 / (100 + enemy.Evasion - player.Accuracy));
 
 
         if (RandFloat() < evadeChance)
         {
             // Attack evaded
-            //Debug.Log("Enemy evaded attack.");
+            Debug.Log("Enemy evaded attack.");
             return; 
         } else
         {
-            double damage = playerDamage * (100 / (100 + enemy.Armor));
+            double damage = player.Attack * (100 / (100 + enemy.Armor));
 
             if (RandFloat() < player.CritChance)
             {
@@ -71,7 +70,7 @@ public class CombatHandler : MonoBehaviour
                 
 
             enemy.TakeDamage((int)damage);
-            //Debug.Log("Enemy took damage: " + damage);
+            Debug.Log("Enemy took damage: " + damage);
         }
     }
 
@@ -82,13 +81,13 @@ public class CombatHandler : MonoBehaviour
         if (enemy.Accuracy >= player.Evasion)
             evadeChance = 0;
         else
-            evadeChance = 1 - (100 / (100 + player.Evasion));
+            evadeChance = 1 - (100 / (100 + player.Evasion - enemy.Accuracy));
 
 
         if (RandFloat() < evadeChance)
         {
             // Attack evaded
-            //Debug.Log("Player evaded attack.");
+            Debug.Log("Player evaded attack.");
             return;
         }
         else
@@ -101,7 +100,7 @@ public class CombatHandler : MonoBehaviour
             }
 
             player.TakeDamage((int)damage);
-            //Debug.Log("Player took damage: " + damage);
+            Debug.Log("Player took damage: " + damage);
         }
     }
 
@@ -109,15 +108,17 @@ public class CombatHandler : MonoBehaviour
 
     public void UpdatePlayer()
     {
-        playerDamage = player.Attack;
-        attackDelay = player.BaseAttackDelay / player.AttackSpeed;
+        //player.Attack = player.Attack;
+        //attackDelay = player.BaseAttackDelay / player.AttackSpeed;
+        Debug.Log("Player attack delay: " + player.AttackDelay);
     }
 
     public void UpdateEnemy()
     {
         enemyDamage = enemy.Attack;
         enemyAttackDelay = enemy.BaseAttackDelay / enemy.AttackSpeed;
-        
+        Debug.Log("Enemy attack delay: " + enemyAttackDelay);
+
     }
 
     private float RandFloat()

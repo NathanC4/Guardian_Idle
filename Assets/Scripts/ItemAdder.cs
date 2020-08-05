@@ -74,8 +74,19 @@ public class ItemAdder : MonoBehaviour
     public StatModifier RandMod()
     {
         // ModifierType mt = (ModifierType)UnityEngine.Random.Range(0, Enum.GetValues(typeof(ModifierType)).Length);
+
         ModifierType mt = ModifierType.Add;
-        Stat st = (Stat)UnityEngine.Random.Range(0, Enum.GetValues(typeof(Stat)).Length);
+
+        //Stat st = (Stat)UnityEngine.Random.Range(0, Enum.GetValues(typeof(Stat)).Length);
+        Stat st;
+        int s = UnityEngine.Random.Range(0, 3);
+
+        if (s == 0)
+        {
+            st = Stat.Attack;
+        } else if (s == 1) { st = Stat.Evasion; }
+        else { st = Stat.MaxHealth; }
+
         double val = UnityEngine.Random.Range(1, 11);
 
         return new StatModifier(mt, st, val);

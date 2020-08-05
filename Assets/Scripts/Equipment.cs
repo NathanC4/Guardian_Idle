@@ -19,11 +19,19 @@ public class Equipment : Item
 
     public void Equip()
     {
+        AddStats();
+        Player.instance.UpdateStats();
+    }
+
+    // Used when we don't want to update stats after every equip (ususally when recalculating stats after remove equipment)
+    public void AddStats()
+    {
         foreach (StatModifier sm in mods)
         {
-            sm.Add();
+            Player.instance.statMods[(int)sm.stat, (int)sm.type] += sm.value;
         }
     }
+
 
     public WearSlot GetWearSlot()
     {

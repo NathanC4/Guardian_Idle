@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
     void Awake()
     {
         Attack = 10;
-        BaseAttackDelay = 0.5;
+        BaseAttackDelay = 1.0;
         AttackSpeed = 1.0;
         Armor = 10.0;
         Evasion = 10.0;

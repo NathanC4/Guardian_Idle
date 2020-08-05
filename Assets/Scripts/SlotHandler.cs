@@ -79,6 +79,16 @@ public class SlotHandler : MonoBehaviour
         // Move or swap items
         if (destination.IsEmpty()) // Destination is empty, simply move item
         {
+            if (destination is EquipSlot)
+            {
+                EquipHandler.instance.Add((Equipment) source.GetItem());
+            }
+
+            if (source is EquipSlot)
+            {
+                EquipHandler.instance.Remove((Equipment)source.GetItem());
+            }
+
             destination.AddItem(source.GetItem());
             source.Clear();
         }
@@ -87,6 +97,12 @@ public class SlotHandler : MonoBehaviour
             // Check if swap is valid
             if (!IsValid(destination.GetItem(), source))
                 return;
+
+            if (destination is EquipSlot)
+            {
+                EquipHandler.instance.Remove((Equipment)destination.GetItem());
+                EquipHandler.instance.Add((Equipment)source.GetItem());
+            }
 
             Item temp = destination.GetItem();
             destination.AddItem(source.GetItem());
@@ -111,7 +127,7 @@ public class SlotHandler : MonoBehaviour
                 Equipment eq = (Equipment)item;
 
                 Debug.Log("Slot wear slot: " + es);
-                Debug.Log("Item wear slot: " + eq);
+                Debug.Log("Item wear slot: " + eq.GetWearSlot());
 
                 return es.GetWearSlot() == eq.GetWearSlot();
             }
