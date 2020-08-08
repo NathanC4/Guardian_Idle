@@ -7,7 +7,8 @@ public enum WearSlot { Head, Neck, Body, Boots, Gloves, Ring, Mainhand, Offhand 
 public class Equipment : Item
 {
     public WearSlot wearSlot;
-    List<StatModifier> mods;
+    //[SerializeField]
+    public List<StatModifier> mods;
 
 
     public Equipment(int id, string name, string imagePath, WearSlot wearSlot, List<StatModifier> mods) : base(id, name, imagePath)

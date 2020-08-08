@@ -1,5 +1,7 @@
 ﻿public enum ModifierType { Add, Percent, Multiply}
 public enum Stat { MaxHealth, Attack, AttackSpeed, Accuracy, Armor, Evasion, CritChance, CritMulti}
+
+[System.Serializable]
 public class StatModifier
 {
     public ModifierType type;
