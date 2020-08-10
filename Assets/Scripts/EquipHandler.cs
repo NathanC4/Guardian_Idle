@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using CI.QuickSave;
 using UnityEngine;
+
 
 public class EquipHandler : MonoBehaviour
 {
@@ -8,7 +10,7 @@ public class EquipHandler : MonoBehaviour
 
     public List<Equipment> items = new List<Equipment>();
 
-    public List<ItemSlot> slots;
+    public List<EquipSlot> slots;
     public event Action<ItemSlot> OnBeginDragEvent;
     public event Action<ItemSlot> OnDragEvent;
     public event Action<ItemSlot> OnEndDragEvent;
@@ -60,5 +62,57 @@ public class EquipHandler : MonoBehaviour
         }
 
         Player.instance.UpdateStats();
+    }
+
+    public void Save()
+    {
+        QuickSaveWriter writer = QuickSaveWriter.Create("GuardianIdleSave");
+        Equipment item;
+        string key;
+
+        for (int i = 0; i < slots.Count; i++)
+        {
+            key = "equipSlot" + i;
+
+            if (!(slots[i].IsEmpty()))
+            {
+                item = (Equipment)slots[i].GetItem();
+                string data = JsonUtility.ToJson(item, false);
+
+                writer.Write(key, data);
+            }
+            else
+            {
+                writer.Delete(key);
+            }
+        }
+
+        writer.Commit();
+    }
+
+    public void Load()
+    {
+        QuickSaveReader reader = QuickSaveReader.Create("GuardianIdleSave");
+        Equipment item;
+        string key;
+
+        for (int i = 0; i < slots.Count; i++)
+        {
+            key = "equipSlot" + i;
+
+            if (reader.Exists(key))
+            {
+                string JsonString = reader.Read<string>(key);
+
+                
+                item = JsonUtility.FromJson<Equipment>(JsonString);
+                slots[i].AddItem(item);
+            }
+            else
+            {
+                // Saved slot is empty, clear the slot to prevent duplication
+                slots[i].Clear();
+            }
+        }
     }
 }

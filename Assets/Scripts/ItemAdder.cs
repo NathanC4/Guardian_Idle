@@ -1,14 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using CI.QuickSave;
 
 public class ItemAdder : MonoBehaviour
 {
+    public static ItemAdder instance;
+
     public Item item;
-    int idCounter = 0;
+    int idCounter;
     string icon;
     WearSlot ws;
     List<StatModifier> mods;
+
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Debug.LogWarning("More than one instance of ItemAdder!");
+        }
+        instance = this;
+    }
 
     public void AddItem()
     {
@@ -90,5 +102,22 @@ public class ItemAdder : MonoBehaviour
         double val = UnityEngine.Random.Range(1, 11);
 
         return new StatModifier(mt, st, val);
+    }
+
+    public void Save()
+    {
+        QuickSaveWriter writer = QuickSaveWriter.Create("GuardianIdleSave");
+        writer.Write("itemIdCounter", idCounter);
+        writer.Commit();
+    }
+
+    public void Load()
+    {
+        QuickSaveReader reader = QuickSaveReader.Create("GuardianIdleSave");
+
+        if (reader.Exists("itemIdCounter"))
+            idCounter = reader.Read<int>("itemIdCounter");
+        else
+            idCounter = 0;       
     }
 }
