@@ -87,6 +87,7 @@ public class Inventory : MonoBehaviour
                 string data = JsonUtility.ToJson(item, false);
                 Debug.Log(key);
                 writer.Write(key, data);
+                writer.Write(key + "_icon", item.imagePath);
 
                 if (item is Equipment)
                     writer.Write(key + "_type", "equipment");
@@ -129,6 +130,9 @@ public class Inventory : MonoBehaviour
                 {
                     item = JsonUtility.FromJson<Item>(JsonString);
                 }
+
+                string icon = reader.Read<string>(key + "_icon");
+                item.SetIcon(icon);
 
                 Debug.Log("adding item to slot: " + i);
                 slots[i].AddItem(item);

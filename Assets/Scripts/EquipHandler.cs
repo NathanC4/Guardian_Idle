@@ -80,6 +80,7 @@ public class EquipHandler : MonoBehaviour
                 string data = JsonUtility.ToJson(item, false);
 
                 writer.Write(key, data);
+                writer.Write(key + "_icon", item.imagePath);
             }
             else
             {
@@ -103,9 +104,11 @@ public class EquipHandler : MonoBehaviour
             if (reader.Exists(key))
             {
                 string JsonString = reader.Read<string>(key);
-
-                
                 item = JsonUtility.FromJson<Equipment>(JsonString);
+                
+                string icon = reader.Read<string>(key + "_icon");
+                item.SetIcon(icon);
+
                 slots[i].AddItem(item);
             }
             else
