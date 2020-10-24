@@ -7,9 +7,6 @@ public class Enemy : MonoBehaviour
     public CombatHandler ch;
     public HealthBar healthBar;
 
-    public int health;
-    public int maxHealth = 100;
-
     public double Attack { get; set; }
     public double BaseAttackDelay { get; set; }
     public double AttackSpeed { get; set; }
@@ -18,35 +15,28 @@ public class Enemy : MonoBehaviour
     public double Accuracy { get; set; }
     public double CritChance { get; set; }
     public double CritMulti { get; set; }
+    public int Health { get; set; }
+    public int MaxHealth { get; set; }
 
-    void Awake()
+    public Enemy (CombatHandler ch, HealthBar healthBar)
     {
-        Attack = 10;
-        BaseAttackDelay = 1.0;
-        AttackSpeed = 1.0;
-        Armor = 10.0;
-        Evasion = 10.0;
-        Accuracy = 10.0;
-        CritChance = 0.05;
-        CritMulti = 1.5;
-
-        health = maxHealth;
-        UpdateHealthBar();
+        this.ch = ch;
+        this.healthBar = healthBar;
     }
 
     public void TakeDamage(int damage)
     {
-        health -= damage;
+        Health -= damage;
 
-        if (health <= 0)
-            health = maxHealth;
+        if (Health <= 0)
+            Health = MaxHealth;
 
         UpdateHealthBar();
     }
 
-    void UpdateHealthBar()
+    public void UpdateHealthBar()
     {
-        healthBar.SetValue((float)health / maxHealth);
+        healthBar.SetValue((float)Health / MaxHealth);
     }
 
     // increase AS by .05

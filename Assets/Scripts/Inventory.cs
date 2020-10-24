@@ -40,6 +40,11 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void Update()
+    {
+        slots[39].Clear();
+    }
+
     public void Add(Item item)
     {
         Debug.Log("adding: " + item.name);

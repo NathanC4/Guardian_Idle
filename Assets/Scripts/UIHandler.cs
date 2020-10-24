@@ -15,15 +15,24 @@ public class UIHandler : MonoBehaviour
 
     void Update()
     {
-        // toggle inventory window
         if (Input.GetButtonDown("Inventory"))
         {
-            invPanel.SetActive(!invPanel.activeSelf);
+            ToggleInventoryWindow();
         }
 
         if (Input.GetButtonDown("EquipPanel"))
         {
-            equipPanel.SetActive(!equipPanel.activeSelf);
+            ToggleEquipWindow();
         }
+    }
+
+    public void ToggleInventoryWindow()
+    {
+        invPanel.SetActive(!invPanel.activeSelf);
+    }
+
+    public void ToggleEquipWindow()
+    {
+        equipPanel.SetActive(!equipPanel.activeSelf);
     }
 }

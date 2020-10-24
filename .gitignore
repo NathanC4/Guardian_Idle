@@ -3,6 +3,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Unity stuff
+Library/
+Temp/
+
 # User-specific files
 *.rsuser
 *.suo
@@ -339,3 +343,6 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 /Temp/UnityLockfile
+/Library/il2cpp_cache
+/Library/PlayerDataCache/WebGL
+/Library/ShaderCache
