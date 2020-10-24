@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//test
 public class Bunny : Enemy
 {
     public Bunny (CombatHandler ch, HealthBar healthBar) : base (ch, healthBar)
